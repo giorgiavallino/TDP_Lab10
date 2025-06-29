@@ -1,5 +1,5 @@
 from database.DB_connect import DBConnect
-from model.Country import Country
+from model.country import Country
 from model.contiguity import Contiguity
 
 class DAO():
@@ -33,6 +33,20 @@ class DAO():
         cursor.execute(query, (anno,))
         for row in cursor:
             result.append((row["s1"], row["s2"]))
+        cursor.close()
+        conn.close()
+        return result
+
+    @staticmethod
+    def getAllCountry():
+        conn = DBConnect.get_connection()
+        cursor = conn.cursor(dictionary=True)
+        result = []
+        query = """SELECT *
+                FROM country c"""
+        cursor.execute(query,)
+        for row in cursor:
+            result.append(Country(**row))
         cursor.close()
         conn.close()
         return result
