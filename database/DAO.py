@@ -14,7 +14,8 @@ class DAO():
         result = []
         query = """SELECT *
                 FROM contiguity c
-                where c.`year` <= %s"""
+                WHERE c.`year` <= %s
+                ORDER BY c.state1ab"""
         cursor.execute(query, (anno,))
         for row in cursor:
             result.append(Contiguity(**row))
@@ -29,7 +30,7 @@ class DAO():
         result = []
         query = """SELECT c.state1no AS s1, c.state2no AS s2
                 FROM contiguity c 
-                WHERE c.`year` <= %s"""
+                WHERE c.`year` <= %s AND c.conttype = 1"""
         cursor.execute(query, (anno,))
         for row in cursor:
             result.append((row["s1"], row["s2"]))

@@ -16,14 +16,29 @@ class Model:
             oggettoNodo = self._idMap[nodo.state1no]
             if not self._graph.has_node(oggettoNodo):
                 self._graph.add_node(oggettoNodo)
-                print(self._graph.nodes)
+        self.addEdges(anno)
 
     def addEdges(self, anno):
         archi = DAO.getAllEdges(anno)
-        self._graph.add_edges_from(archi)
+        for arco in archi:
+            oggettoArco_01 = self._idMap[arco[0]]
+            oggettoArco_02 = self._idMap[arco[1]]
+            self._graph.add_edge(oggettoArco_01, oggettoArco_02)
 
     def getNumNodes(self):
         return len(self._graph.nodes)
 
     def getNumEdges(self):
         return len(self._graph.edges)
+
+    def getNodesDegree(self):
+        result = []
+        for nodo in self._graph.nodes:
+            if self._graph.degree(nodo) != 0:
+                tuplaInfoNodo = (nodo, self._graph.degree(nodo))
+                result.append(tuplaInfoNodo)
+        return result
+
+    def getCompConnesse(self):
+        numCompConnesse = nx.number_connected_components(self._graph)
+        return numCompConnesse
