@@ -10,7 +10,9 @@ class Country:
         return hash(self.CCode)
 
     def __eq__(self, other):
-        return self.CCode == other.CCode
+        if isinstance(other, Country):
+            return self.CCode == other.CCode
+        return False
 
     def __str__(self):
         return f"{self.StateNme} ({self.StateAbb}, {self.CCode})"

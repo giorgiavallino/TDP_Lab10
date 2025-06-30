@@ -44,7 +44,8 @@ class DAO():
         cursor = conn.cursor(dictionary=True)
         result = []
         query = """SELECT *
-                FROM country c"""
+                FROM country c
+                ORDER BY c.StateNme"""
         cursor.execute(query,)
         for row in cursor:
             result.append(Country(**row))

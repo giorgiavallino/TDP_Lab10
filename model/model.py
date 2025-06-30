@@ -1,5 +1,7 @@
 import networkx as nx
 from database.DAO import DAO
+from model.country import Country
+
 
 class Model:
 
@@ -42,3 +44,14 @@ class Model:
     def getCompConnesse(self):
         numCompConnesse = nx.number_connected_components(self._graph)
         return numCompConnesse
+
+    def getNodesRaggiungibili(self, source: Country):
+        bfsTree = nx.bfs_tree(self._graph, source)
+        nodi = list(bfsTree.nodes)
+        return nodi
+
+    def controlNode(self, source: Country):
+        if source in self._graph.nodes:
+            return True
+        else:
+            return False
